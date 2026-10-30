@@ -1,0 +1,95 @@
+# LightningDiT training
+
+ckpt_path: null  # Set to checkpoint path if resuming
+
+data:
+  # Path to YAML config file specifying dataset shards
+  data_config_path: 'configs/data_radin.yaml'
+
+  # Image and model settings
+  image_size: 256
+  num_classes: 1006  # ImageNet 0-999, 1000=preserved ImageNet-CFG, 1001-1005=regions, NEW CFG at end=1006
+  num_workers: 6  # Workers per dataloader (overridden by data_config if specified)
+
+  # Label scheme: 1001..1005 = CT/abd, CT/lung, MR/hip, MR/knee, MR/shoulder.
+  label_mode: region_extended
+
+  # VA-VAE normalization settings
+  latent_norm: true  # Channel-wise normalization (VA-VAE paper uses this)
+  latent_multiplier: 1.0  # VA-VAE uses 1.0 (no additional scaling beyond normalization)
+
+  # Path to VA-VAE official latent statistics (optional - will compute if not found in dataset dir)
+  # If provided, this will be copied to dataset directories for consistency
+  vavae_stats_path: 'pretrained/vavae-imagenet256-f16d32-dinov2/latents_stats.pt'
+
+# VAE settings (using VA-VAE f16d32)
+vae:
+  model_name: 'vavae-imagenet256-f16d32-dinov2'
+  downsample_ratio: 16  # VA-VAE uses 16x downsampling
+
+# Model architecture (identical to VA-VAE paper)
+model:
+  model_type: LightningDiT-XL/1
+  use_qknorm: true  # VA-VAE paper does not use QKNorm
+  use_swiglu: true   # SwiGLU activation (VA-VAE paper)
+  use_rope: true     # RoPE positional embeddings (VA-VAE paper)
+  use_rmsnorm: true  # RMSNorm (VA-VAE paper)
+  wo_shift: false    # Keep shift in AdaLN
+  in_chans: 32       # VA-VAE f16d32 has 32 latent channels
+
+# Training settings (from VA-VAE paper)
+train:
+  max_steps: 100000
+  global_batch_size: 384
+  global_seed: 0
+  output_dir: 'output'
+  exp_name: 'radin_XL_vavae_region5_256_pretrained_100k'
+  ckpt: null  # Set to checkpoint path if resuming interrupted training
+  resume: true  # Resume from the latest ckpt in output_dir, if there is one
+  log_every: 500
+  ckpt_every: 25000
+
+  # SCRATCH: weight_init=null → train_shards.py skips loading (random init).
+  weight_init: 'pretrained/lightningdit-xl-imagenet256-800ep/lightningdit-xl-imagenet256-800ep.pt'  # ImageNet LightningDiT-XL 800ep -> load_weights_with_shape_check extends embed 1001->1006
+  reuse_pretrained_cfg_token: true  # warm-init new CFG slot (row 1005) from ImageNet uncond token (row 1000)
+
+  # WandB settings
+  use_wandb: true
+  wandb_project: 'radin-lightdit'
+  wandb_entity: null  # Set to your wandb username/team
+
+# Optimizer settings (from VA-VAE paper)
+optimizer:
+  lr: 0.0002  # VA-VAE paper uses 2e-4
+  beta2: 0.95  # VA-VAE paper uses beta2=0.95
+  max_grad_norm: 1.0  # Gradient clipping
+  epsilon: 1e-15 # for longer training schemes its beneficial
+
+# Transport (flow matching) settings (from VA-VAE paper)
+transport:
+  path_type: Linear         # Rectified flow
+  prediction: velocity      # Velocity prediction
+  loss_weight: null
+  sample_eps: null
+  train_eps: null
+  use_cosine_loss: true    # VA-VAE paper uses cosine loss weighting
+  use_lognorm: true        # VA-VAE paper uses LogNorm timestep sampling
+
+# Sampling settings (for training visualization and inference)
+sample:
+  # Training visualization
+  sample_every: 0      # Generate samples every N steps during training (0 to disable, recommended due to memory)
+  cfg_scale: 1.5          # Classifier-free guidance scale for training viz
+  per_proc_batch_size: 12  # Samples per GPU for training-time visualisation
+  # Inference settings (from VA-VAE paper)
+  mode: ODE
+  sampling_method: euler   # Euler ODE sampler
+  atol: 0.000001
+  rtol: 0.001
+  reverse: false
+  likelihood: false
+  num_sampling_steps: 250  # VA-VAE paper uses 250 steps
+  fid_cfg_scale: 6.7      # VA-VAE paper uses 6.7 for FID=1.35 (for full inference)
+  cfg_interval_start: 0.11  # CFG interval (VA-VAE paper)
+  timestep_shift: 0.3       # Timestep shift inspired by FLUX (VA-VAE paper)
+  fid_num: 15000           # Number of samples for FID evaluation

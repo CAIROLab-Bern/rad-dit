@@ -1,0 +1,42 @@
+# VA-VAE ImageNet pretrained (no BraTS fine-tuning) - INFERENCE ONLY
+# Baseline: original hustvl/vavae-imagenet256-f16d32-dinov2
+
+ckpt_path: pretrained/vavae-imagenet256-f16d32-dinov2/vavae-imagenet256-f16d32-dinov2.pt
+
+model:
+  base_learning_rate: 5.0e-05
+  target: ldm.models.autoencoder.AutoencoderKL
+  params:
+    monitor: val/rec_loss
+    embed_dim: 32
+    use_vf: null  # No VF during inference
+    reverse_proj: false
+    freeze_encoder: false  # For inference, we don't freeze
+    use_ema: false
+    ema_decay: 0.999
+    lossconfig:
+      target: ldm.modules.losses.LPIPSWithDiscriminator
+      params:
+        disc_start: 1
+        kl_weight: 0.0
+        disc_weight: 0.5
+        vf_weight: 0.0
+        adaptive_vf: false
+
+    ddconfig:
+      double_z: true
+      z_channels: 32
+      resolution: 256
+      in_channels: 3
+      out_ch: 3
+      ch: 128
+      ch_mult:
+      - 1
+      - 1
+      - 2
+      - 2
+      - 4
+      num_res_blocks: 2
+      attn_resolutions:
+      - 16
+      dropout: 0.0

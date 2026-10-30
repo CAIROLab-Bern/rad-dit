@@ -1,0 +1,18 @@
+# RadImageNet vavae latents @256 — held-out split excluded, TRAIN shards.
+# Produced by ldit/preprocessing/extract_latents_radimagenet.py.
+latent_size: 16        # spatial H=W
+latent_channels: 32    # latent channels
+reconstruction_size: 256
+
+shard_window_size: 26
+dataloader:
+  num_workers: 6
+  pin_memory: true
+  drop_last: true
+
+datasets:
+  - path: "../data/latents/radin/train"
+    cache_size: 26
+
+# Each shard: latents [N,32,16,16] + region_label [N] (0-4 →
+# region_extended maps to 1001..1005).

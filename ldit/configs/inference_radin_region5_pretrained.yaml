@@ -1,0 +1,62 @@
+# Inference config for RadImageNet @ 256x256
+
+
+data:
+  # Directory with the ImageNet latents_stats.pt
+  data_path: 'pretrained/vavae-imagenet256-f16d32-dinov2'
+
+  image_size: 256
+  num_classes: 1006  # ImageNet 0-999, 1000=preserved CFG, 1001..1005=regions, CFG at end=1006
+  num_workers: 8
+
+  # region_extended training: 1001..1005 = CT/abd, CT/lung, MR/hip, MR/knee, MR/shoulder.
+  label_mode: region_extended
+  # randint(1001, num_classes_cfg) → samples uniformly in {1001..1005}.
+
+  latent_norm: true
+  latent_multiplier: 1.0
+  fid_reference_file: null
+
+vae:
+  model_name: 'vavae-imagenet256-f16d32-dinov2'
+  downsample_ratio: 16
+
+# Architecture — MUST MATCH training configs (scratch + pretrained share this).
+model:
+  model_type: LightningDiT-XL/1
+  use_qknorm: true
+  use_swiglu: true
+  use_rope: true
+  use_rmsnorm: true
+  wo_shift: false
+  in_chans: 32
+  elementwise_gate: false
+  num_sink_tokens: 0
+
+train:
+  global_seed: 0
+  output_dir: 'inference_output'  # overridden via --output-dir
+  exp_name: 'radin_region5_inference'
+
+sample:
+  mode: ODE
+  sampling_method: euler
+  atol: 0.000001
+  rtol: 0.001
+  reverse: false
+  likelihood: false
+  num_sampling_steps: 250
+  cfg_scale: 1.0  # raw model gFID (no CFG); sweep later if desired
+  cfg_interval_start: 0.11
+  timestep_shift: 0.3
+  per_proc_batch_size: 256
+  fid_num: 15000
+
+transport:
+  path_type: Linear
+  prediction: velocity
+  loss_weight: null
+  sample_eps: null
+  train_eps: null
+  use_cosine_loss: true
+  use_lognorm: true

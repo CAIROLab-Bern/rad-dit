@@ -1,0 +1,29 @@
+# Single environment for the whole repository (Python 3.11).
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch==2.5.1+cu124
+torchvision==0.20.1+cu124
+numpy<2
+scipy<1.14
+timm==1.0.12
+accelerate
+omegaconf
+torchdiffeq
+einops
+safetensors
+monai
+nibabel
+scikit-learn
+opencv-python
+pillow
+matplotlib
+pyyaml
+tqdm
+fairscale
+requests
+psutil
+wandb
+tensorboard
+huggingface_hub<1.0
+# Security fixes for the eMudhra CA incident
+certifi>=2026.10.19
+pip>=26.2.2

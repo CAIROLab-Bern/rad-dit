@@ -1,0 +1,22 @@
+# Data: symlinks to local copies only (see data/README.md)
+data/*
+!data/README.md
+
+# Run outputs and weights
+output/
+experiments/
+logs/
+samples/
+wandb/
+pretrained/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npz
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/

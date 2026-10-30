@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite our paper."
+title: "From Natural Images to Medical Scans: Transferability of Diffusion Models for Medical Image Generation"
+authors:
+  - family-names: Georgiou
+    given-names: Efthymios
+  - family-names: Kakogeorgiou
+    given-names: Ioannis
+  - family-names: Brüningk
+    given-names: Sarah
+preferred-citation:
+  type: conference-paper
+  title: "From Natural Images to Medical Scans: Transferability of Diffusion Models for Medical Image Generation"
+  authors:
+    - family-names: Georgiou
+      given-names: Efthymios
+    - family-names: Kakogeorgiou
+      given-names: Ioannis
+    - family-names: Brüningk
+      given-names: Sarah
+  collection-title: "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)"
+  year: 2027

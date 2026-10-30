@@ -1,0 +1,42 @@
+# Data configuration for sharded latent training with VA-VAE
+# This file specifies the datasets and shard window settings for memory-efficient training
+# Uses VA-VAE f16d32 extracted latents (32 channels, 16x downsampling)
+
+# Latent space configuration (from VA-VAE f16d32 extraction at 256x256)
+# Slices are bicubic-upsampled from 192x192 to 256x256 before VA-VAE encoding
+# (matches VA-VAE's ImageNet-256 pretraining).
+latent_size: 16  # Spatial dimension (H=W=16 for 32x16x16 latents, from 256x256 input with 16x downsampling)
+latent_channels: 32  # Latent channels (VA-VAE f16d32)
+reconstruction_size: 256  # Reconstruction image size (H=W=256 for output, matches extraction input)
+
+# Shard window size: number of shards to load in RAM at once
+# - Smaller values use less RAM but may slow down training
+# - Larger values use more RAM but provide faster data access
+# - Typical values: 10-25 shards depending on available RAM
+shard_window_size: 26
+
+# DataLoader configuration
+dataloader:
+  num_workers: 6      # Number of worker processes for data loading
+  pin_memory: true    # Pin memory for faster GPU transfer
+  drop_last: true     # Drop last incomplete batch
+
+# List of datasets to use (will be concatenated if multiple)
+datasets:
+  - path: "../data/latents/brats"
+    cache_size: 26
+
+# Expected shard structure for each dataset:
+#   {path}/
+#   ├── metadata.json (optional)
+#   └── shards/
+#       ├── shard000.safetensors
+#       ├── shard001.safetensors
+#       └── ...
+#
+# Each shard contains:
+#   - latents: [N, C, H, W] VAE-encoded latent vectors (32 channels for VA-VAE f16d32)
+#   - has_tumor: [N] tumor labels (-1=unknown, 0=no tumor, 1=has tumor)
+#   - modalities: [N] MRI modality indicators
+#   - slice_normalized: [N] slice normalization flags
+#   - (optional) seg_masks, slice_indices, tumor_sizes
