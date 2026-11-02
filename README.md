@@ -56,7 +56,7 @@ Place data or symlinks to the datasets in [`data/`](data/). Then prepare the dat
 | **L(ightning)DiT** | Latent diffusion | [`ldit/`](ldit/) |
 
 - The README in each folder has the commands.
-- We have limited compute resources, so we changed the official code to make data loading and training more efficient, with the aim of higher GPU utilisation. For example, we added shard-based data loaders. See [`preprocessing/`](preprocessing/).
+- To aim for higher GPU utilisation, we changed the official code to make data loading and training more efficient. For example, we added shard-based data loaders. See [`preprocessing/`](preprocessing/).
 - Run the commands in `jit/` or `ldit/`. There are two options:
   - **SLURM:** replace `<ACCOUNT>` and `<PARTITION>` in `slurm/*.sh` with your own values. Then run `mkdir -p logs` and use the `sbatch` commands.
   - **Local machine or cloud instance (for example AWS):** use `bash` in place of `sbatch`, with the same arguments. Bash ignores the `#SBATCH` lines.
