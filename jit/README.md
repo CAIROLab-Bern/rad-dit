@@ -12,38 +12,38 @@ This folder has our JiT code for RadImageNet and BraTS. The original README is i
 
 Run all commands in `jit/`. Download the ImageNet JiT weights, see [`README_native.md`](README_native.md). `<imagenet_ckpt>` is the checkpoint of the same model size. Then use `sbatch slurm/train.sh <output_dir> <flags>`. These are examples. Change the paths to your own. Change `--epochs` for your compute budget: we trained RadImageNet for 80 epochs and BraTS for 40.
 
-**RadIN-B/16**
+- **RadIN-B/16**
 
-```bash
-sbatch slurm/train.sh output/radin_b16 \
-    --model JiT-B/16 --epochs 80 \
-    --dataset radimagenet --data_path ../data/radimagenet --exclude_paths ../data/val_paths.txt \
-    --label_mode extended --label_offset 1001 --class_num 1005 --cfg_drop_index 1000 --eval_class_num 5 \
-    --pretrained_ckpt <imagenet_ckpt>
-```
+    ```bash
+    sbatch slurm/train.sh output/radin_b16 \
+        --model JiT-B/16 --epochs 80 \
+        --dataset radimagenet --data_path ../data/radimagenet --exclude_paths ../data/val_paths.txt \
+        --label_mode extended --label_offset 1001 --class_num 1005 --cfg_drop_index 1000 --eval_class_num 5 \
+        --pretrained_ckpt <imagenet_ckpt>
+    ```
 
-**RadIN-L/16:** as above, with `--model JiT-L/16`.
+- **RadIN-L/16:** as above, with `--model JiT-L/16`.
 
-**Mixed15%-L/16**
+- **Mixed15%-L/16**
 
-```bash
-sbatch slurm/train.sh output/mixed15_l16 \
-    --model JiT-L/16 --epochs 80 \
-    --dataset mixed_radnat --data_path ../data/radimagenet --exclude_paths ../data/val_paths.txt \
-    --nat_data_path ../data/imagenet --p_nat 0.15 \
-    --label_mode extended --label_offset 1001 --class_num 1005 --cfg_drop_index 1000 --eval_class_num 5 \
-    --pretrained_ckpt <imagenet_ckpt>
-```
+    ```bash
+    sbatch slurm/train.sh output/mixed15_l16 \
+        --model JiT-L/16 --epochs 80 \
+        --dataset mixed_radnat --data_path ../data/radimagenet --exclude_paths ../data/val_paths.txt \
+        --nat_data_path ../data/imagenet --p_nat 0.15 \
+        --label_mode extended --label_offset 1001 --class_num 1005 --cfg_drop_index 1000 --eval_class_num 5 \
+        --pretrained_ckpt <imagenet_ckpt>
+    ```
 
-**BraTS-B/16 (single channel)**
+- **BraTS-B/16 (single channel)**
 
-```bash
-sbatch slurm/train.sh output/brats_b16 \
-    --model JiT-B/16 --epochs 20 --warmup_epochs 0 \
-    --dataset brats_gli_multichannel --brats_shard_dir ../data/brats24_gli_multichannel_256/train_shards --in_channels 3 --brats_flat \
-    --label_mode extended --label_offset 1001 --class_num 1002 --cfg_drop_index 1000 --eval_class_num 2 \
-    --pretrained_ckpt <imagenet_ckpt>
-```
+    ```bash
+    sbatch slurm/train.sh output/brats_b16 \
+        --model JiT-B/16 --epochs 20 --warmup_epochs 0 \
+        --dataset brats_gli_multichannel --brats_shard_dir ../data/brats24_gli_multichannel_256/train_shards --in_channels 3 --brats_flat \
+        --label_mode extended --label_offset 1001 --class_num 1002 --cfg_drop_index 1000 --eval_class_num 2 \
+        --pretrained_ckpt <imagenet_ckpt>
+    ```
 
 **Without SLURM (local machine or cloud instance such as AWS):** use `bash` in place of `sbatch`, with the same arguments. The scripts use 2 GPUs. For a different number, change `--nproc_per_node` in the script. This also applies to `slurm/calculate_gfid.sh`.
 

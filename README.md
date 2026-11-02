@@ -10,9 +10,9 @@
 
 WACV 2027 (Algorithms track)
 
-</div>
-
 Official PyTorch implementation of the paper *From Natural Images to Medical Scans*.
+
+</div>
 
 ## 🏃 TL;DR
 
@@ -88,7 +88,7 @@ export NCCL_IB_DISABLE=1
 @inproceedings{georgiou2027natural,
   title     = {From Natural Images to Medical Scans: Transferability of Diffusion Models for Medical Image Generation},
   author    = {Georgiou, Efthymios and Kakogeorgiou, Ioannis and Br{\"u}ningk, Sarah},
-  booktitle = {IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+  booktitle = {2027 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
   year      = {2027}
 }
 ```

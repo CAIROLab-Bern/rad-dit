@@ -10,6 +10,7 @@ Download the weights from the original authors:
 
 ```bash
 hf download hustvl/vavae-imagenet256-f16d32-dinov2 --local-dir pretrained/vavae-imagenet256-f16d32-dinov2
+
 hf download hustvl/lightningdit-xl-imagenet256-800ep --local-dir pretrained/lightningdit-xl-imagenet256-800ep
 ```
 
