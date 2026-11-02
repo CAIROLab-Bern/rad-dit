@@ -16,7 +16,7 @@ Official PyTorch implementation of the paper *From Natural Images to Medical Sca
 
 ## 🏃 TL;DR
 
-Initialising diffusion transformers with ImageNet weights improves medical image generation, in both latent and pixel space denoising. Natural-image initialisation results in **more spatially structured representations, not more semantic ones**, and this spatial structure (LDS<sub>C</sub>) correlates with generation fidelity. Mixing natural with medical images also helps medical fidelity.
+Initialising diffusion transformers with ImageNet weights improves medical image generation, in both latent and pixel space denoising. Natural-image initialisation results in **more spatially structured representations, not more semantic ones**, and this spatial structure (LDS<sub>C</sub>) correlates with generation fidelity. Mixing natural with medical images also improves medical fidelity, while early-to-mid representations stay similar across domains in the mixed model. Last but not least, natural-image pretraining outperforms or matches medical-image pretraining in our setup.
 
 ## 💡 Findings
 
