@@ -44,6 +44,8 @@ This installs one environment for all the code. For more information, see [`envi
 - RadImageNet: https://github.com/BMEII-AI/RadImageNet
 - BraTS 2024 GLI: https://www.synapse.org/Synapse:syn53708249/wiki/627759
 
+In this repository, "BraTS" means the BraTS 2024 adult glioma dataset (BraTS-GLI, post-treatment MRI), not all datasets of the BraTS 2024 challenge.
+
 Place data or symlinks to the datasets in [`data/`](data/). Then prepare the data, see [`preprocessing/`](preprocessing/).
 
 ## 🏋️ Training and 📝 evaluation
