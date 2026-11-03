@@ -9,6 +9,7 @@ logs/
 samples/
 wandb/
 pretrained/
+checkpoints/
 *.pt
 *.pth
 *.ckpt
