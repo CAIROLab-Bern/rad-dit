@@ -72,11 +72,12 @@ For BraTS, use the class flags and the channel flags of the BraTS training examp
 
 The probes and the similarity script read the flat folder `../data/radin_val`, see [`../preprocessing/`](../preprocessing/).
 
-**Representation similarity:** download the 25% mixed JiT-L/16 checkpoint (coming soon). Then run:
+**Representation similarity:** download the 25% mixed JiT-L/16 checkpoint from [Hugging Face](https://huggingface.co/rad-dit/jit-radimagenet). Then run:
 
 ```bash
+hf download rad-dit/jit-radimagenet --include "L16-mix25/*" --local-dir weights/radimagenet
 python analysis/representation_similarity.py \
-    --ckpt <mix25_ckpt> --model JiT-L/16 \
+    --ckpt weights/radimagenet/L16-mix25/checkpoint-last.pth --model JiT-L/16 \
     --radin_val ../data/radin_val --imnet_train ../data/imagenet/train \
     --mode cond --class_num 1005 --cfg_drop_index 1000 \
     --k_per_class 64 --n_per_t 64 --batch_size 8 \
