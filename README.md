@@ -65,11 +65,11 @@ Place data or symlinks to the datasets in [`data/`](data/). Then prepare the dat
 
 ### 🤗 Pretrained models
 
-| Repository | Models | Downloads |
-|---|---|---|
-| [rad-dit/jit-radimagenet](https://huggingface.co/rad-dit/jit-radimagenet) | JiT-B/16, JiT-L/16, JiT-H/16, JiT-L/16 mixed (15%, 25% ImageNet) | ![downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2Frad-dit%2Fjit-radimagenet%3Fexpand%255B%255D%3DdownloadsAllTime&query=%24.downloadsAllTime&label=downloads&logo=huggingface&color=ffcc4d) |
-| [rad-dit/ldit-radimagenet](https://huggingface.co/rad-dit/ldit-radimagenet) | LightningDiT-XL/1 | ![downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2Frad-dit%2Fldit-radimagenet%3Fexpand%255B%255D%3DdownloadsAllTime&query=%24.downloadsAllTime&label=downloads&logo=huggingface&color=ffcc4d) |
-| [rad-dit/ldit-brats](https://huggingface.co/rad-dit/ldit-brats) | LightningDiT-XL/1 | ![downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2Frad-dit%2Fldit-brats%3Fexpand%255B%255D%3DdownloadsAllTime&query=%24.downloadsAllTime&label=downloads&logo=huggingface&color=ffcc4d) |
+| Repository | Models |
+|---|---|
+| [rad-dit/jit-radimagenet](https://huggingface.co/rad-dit/jit-radimagenet) | JiT-B/16, JiT-L/16, JiT-H/16, JiT-L/16 mixed (15%, 25% ImageNet) |
+| [rad-dit/ldit-radimagenet](https://huggingface.co/rad-dit/ldit-radimagenet) | LightningDiT-XL/1 |
+| [rad-dit/ldit-brats](https://huggingface.co/rad-dit/ldit-brats) | LightningDiT-XL/1 |
 
 Each model card has the download and generation commands.
 
