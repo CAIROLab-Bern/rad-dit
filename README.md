@@ -8,7 +8,7 @@
 
 [Efthymios Georgiou](https://scholar.google.com/citations?user=5Sc6GvEAAAAJ&hl=en), [Ioannis Kakogeorgiou](https://scholar.google.com/citations?user=B_dKcz4AAAAJ&hl=en), [Sarah Brüningk](https://scholar.google.com/citations?user=Wio1KtsAAAAJ&hl=en)
 
-WACV 2027 (Algorithms track)
+WACV 2027
 
 Official PyTorch implementation of the paper *From Natural Images to Medical Scans*.
 
